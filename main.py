@@ -1,19 +1,14 @@
-import utils.misc as ut
-
-# Press Mayús+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+import utils.imports as imp
+import utils.visuals as visu
+import utils.processing as proc
 
 
+data = imp.read_diabetes_txt("data/diabetes.tab.txt")
+print("archivo txt cargado")
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-    foo = ut.getHypotenuse(3, 4)
-    print(foo)
+correlation_data = proc.get_correlations(data)
+visu.save_histograms(data)
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+visu.save_scatter_plots(data, correlation_data)
+
+visu.save_histogram_correlations(data)
