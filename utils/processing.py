@@ -1,4 +1,5 @@
 import os
+import math as mt
 import pandas as pd
 
 
@@ -19,3 +20,15 @@ def get_correlations(data):
     correlations_data = data.corr()
     save_correlations(correlations_data)
     return correlations_data
+
+
+def normalize_diabetes_data(data):
+    mu_data = data.mean()
+    std_data = data.std()
+    x = data.sub(mu_data, axis='columns')
+    x2 = x.div(std_data, axis='columns')
+    val = (1 / mt.sqrt(442))
+    x3 = x2.mul(val, axis='columns')
+    x3["Y"] = data["Y"]
+    return x3
+

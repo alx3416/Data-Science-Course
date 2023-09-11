@@ -12,3 +12,12 @@ visu.save_histograms(data)
 visu.save_scatter_plots(data, correlation_data)
 
 visu.save_histogram_correlations(data)
+
+data_normalized = proc.normalize_diabetes_data(data)
+print("data normalized")
+
+# Z = 1/sqrt(n) * ((x-mu)/sigma)
+# data.mean()
+# x = data["AGE"]
+# x = data.loc[:, "AGE"]
+# x.mean()
