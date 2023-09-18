@@ -3,7 +3,8 @@ import math as mt
 import pandas as pd
 import numpy as np
 from sklearn import linear_model
-from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.metrics import mean_squared_error, r2_score, confusion_matrix
+from sklearn import preprocessing
 
 
 def check_output_folder(path):
@@ -50,11 +51,17 @@ def split_data(data, split_percentage):
     return training_data, test_data
 
 
-def simple_linear_regression(input_train, output_train):
+def linear_regression(input_train, output_train):
     regr = linear_model.LinearRegression()
     inputs = input_train.values.reshape(-1, len(input_train.columns))
     regr.fit(inputs, output_train)
     return regr
+
+
+def logistic_regression(input_train, output_train):
+    model = linear_model.LogisticRegression()
+    model.fit(input_train, output_train)
+    return model
 
 
 def test_predictions(model, input_test):
@@ -72,3 +79,14 @@ def get_mean_squared_error(output_test, output_predicted):
 
 def get_coefficient_determination(output_test, output_predicted):
     return r2_score(output_test, output_predicted)
+
+
+def get_confusion_matrix(diabetes_y_test, diabetes_y_pred):
+    cnf_matrix = confusion_matrix(diabetes_y_test, diabetes_y_pred)
+    return cnf_matrix
+
+
+def values_2_categorical(data):
+    lab = preprocessing.LabelEncoder()
+    return lab.fit_transform(data)
+
