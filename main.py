@@ -21,12 +21,6 @@ visu.save_correlations_heatmap(data)
 normalized_data = proc.normalize_diabetes_data(data)
 print("data normalized")
 
-# Z = 1/sqrt(n) * ((x-mu)/sigma)
-# data.mean()
-# x = data["AGE"]
-# x = data.loc[:, "AGE"]
-# x.mean()
-
 training, test = proc.split_data(normalized_data, 0.7)
 training_input = pd.DataFrame(training, columns=["AGE", "BMI", "BP"])
 training_output = pd.DataFrame(training, columns=["Y"])

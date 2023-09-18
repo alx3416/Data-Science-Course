@@ -28,12 +28,12 @@ def get_correlations(data):
 def normalize_diabetes_data(data):
     mu_data = data.mean()
     std_data = data.std()
-    x = data.sub(mu_data, axis='columns')
-    x2 = x.div(std_data, axis='columns')
+    normalized_data = data.sub(mu_data, axis='columns')
+    normalized_data = normalized_data.div(std_data, axis='columns')
     val = (1 / mt.sqrt(442))
-    x3 = x2.mul(val, axis='columns')
-    x3["Y"] = data["Y"]
-    return x3
+    normalized_data = normalized_data.mul(val, axis='columns')
+    normalized_data["Y"] = data["Y"]
+    return normalized_data
 
 
 def use_only_one_feature(data):
