@@ -13,7 +13,7 @@ correlation_data = proc.get_correlations(data)
 
 # visu.save_histogram_correlations(data)
 
-data_normalized = proc.normalize_diabetes_data(data)
+normalized_data = proc.normalize_diabetes_data(data)
 print("data normalized")
 
 # Z = 1/sqrt(n) * ((x-mu)/sigma)
@@ -22,14 +22,17 @@ print("data normalized")
 # x = data.loc[:, "AGE"]
 # x.mean()
 
-input_data = data_normalized["BMI"]
-output_data = data_normalized["Y"]
-training_input, test_input = proc.split_data(input_data)
-training_output, test_output = proc.split_data(output_data)
+training, test = proc.split_data(normalized_data, 0.7)
+training_input = training["AGE"]
+training_output = training["Y"]
+test_input = test["AGE"]
+test_output = test["Y"]
 
 model = proc.simple_linear_regression(training_input, training_output)
 
 test_predictions = proc.test_predictions(model, test_input)
 
 print(proc.get_coefficients(model))
+
+print(proc.get_mean_squared_error(test_output, test_predictions))
 

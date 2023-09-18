@@ -41,9 +41,12 @@ def use_only_one_feature(data):
     return diabetes_one
 
 
-def split_data(data):
-    training_data = data[:-20]
-    test_data = data[-20:]
+def split_data(data, split_percentage):
+    training_data = data.sample(frac=split_percentage)
+    idx_orig = data.index
+    idx_train = training_data.index
+    idx_test = idx_orig.drop(idx_train)
+    test_data = data.loc[idx_test]
     return training_data, test_data
 
 
