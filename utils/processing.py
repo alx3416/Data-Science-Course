@@ -3,7 +3,7 @@ import math as mt
 import pandas as pd
 import numpy as np
 from sklearn import linear_model
-from sklearn.metrics import mean_squared_error, r2_score, confusion_matrix
+from sklearn.metrics import mean_squared_error, r2_score, confusion_matrix, classification_report
 from sklearn import preprocessing
 
 
@@ -81,8 +81,9 @@ def get_coefficient_determination(output_test, output_predicted):
     return r2_score(output_test, output_predicted)
 
 
-def get_confusion_matrix(diabetes_y_test, diabetes_y_pred):
+def get_confusion_matrix(diabetes_y_test, diabetes_y_pred, target_names):
     cnf_matrix = confusion_matrix(diabetes_y_test, diabetes_y_pred)
+    print(classification_report(diabetes_y_test, diabetes_y_pred, target_names=target_names))
     return cnf_matrix
 
 

@@ -54,3 +54,8 @@ test_predictions = proc.test_predictions(model, test_input)
 
 coefficients = proc.get_coefficients(model)
 print("Logistic model Coefficients: ", coefficients)
+
+names = ['male', 'female']
+confusion_matrix = proc.get_confusion_matrix(test_output, test_predictions, names)
+visu.save_confusion_matrix(confusion_matrix)
+visu.save_roc_curve(test_output, test_predictions)
