@@ -1,3 +1,5 @@
+import pandas as pd
+
 import utils.imports as imp
 import utils.visuals as visu
 import utils.processing as proc
@@ -23,16 +25,21 @@ print("data normalized")
 # x.mean()
 
 training, test = proc.split_data(normalized_data, 0.7)
-training_input = training["AGE"]
-training_output = training["Y"]
-test_input = test["AGE"]
-test_output = test["Y"]
+training_input = pd.DataFrame(training, columns=["AGE", "BMI", "BP"])
+training_output = pd.DataFrame(training, columns=["Y"])
+test_input = pd.DataFrame(test, columns=["AGE", "BMI", "BP"])
+test_output = pd.DataFrame(test, columns=["Y"])
 
 model = proc.simple_linear_regression(training_input, training_output)
 
 test_predictions = proc.test_predictions(model, test_input)
 
-print(proc.get_coefficients(model))
-
-print(proc.get_mean_squared_error(test_output, test_predictions))
+coefficients = proc.get_coefficients(model)
+print("Coefficients: ", coefficients)
+MSE = proc.get_mean_squared_error(test_output,
+                                  test_predictions)
+print("Mean Squared Error: ", MSE)
+R2 = proc.get_coefficient_determination(test_output,
+                                        test_predictions)
+print("R² Score: ", R2)
 
