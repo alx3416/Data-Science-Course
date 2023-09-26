@@ -2,6 +2,8 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import utils.processing as proc
 from sklearn import metrics
+import plotly.graph_objects as go
+import plotly.express as px
 
 
 def save_confusion_matrix(confusion):
@@ -18,6 +20,30 @@ def save_roc_curve(diabetes_y_test, diabetes_y_pred):
     metrics.RocCurveDisplay.from_predictions(diabetes_y_test, diabetes_y_pred)
     plt.savefig("output/curve_ROC.png")
     plt.close(new_fig)
+
+
+def save_histogram_edades_padres(data):
+    proc.check_output_folder("output")
+    fig = sns.displot(data, kde=True)
+    fig.savefig("output/hsitograma_edades_padres.png")
+    plt.close()
+
+
+def save_2d_histogram_edades(data):
+    proc.check_output_folder("output")
+    fig = go.Figure(go.Histogram2d(x=data["edad_padn"], y=data["edad_madn"]))
+    fig.show()
+    fig.write_image("output/histograma_2d_edades_padres.svg")
+
+
+def save_heatmap_edades(data):
+    proc.check_output_folder("output")
+    fig = go.Figure(px.density_heatmap(data, x="edad_padn", y="edad_madn",
+                                       color_continuous_scale="Rainbow",
+                                       range_color=[0, 5000],
+                                       title="Edades padres recien nacidos México 2022"))
+    fig.show()
+    fig.write_image("output/heatmap_edades_padres.svg")
 
 
 class Visualizer:
