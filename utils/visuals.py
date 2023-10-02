@@ -4,6 +4,8 @@ import utils.processing as proc
 from sklearn import metrics
 import plotly.graph_objects as go
 import plotly.express as px
+import numpy as np
+import pandas as pd
 
 
 def save_confusion_matrix(confusion):
@@ -42,6 +44,36 @@ def save_heatmap_edades(data):
                                        color_continuous_scale="Rainbow",
                                        range_color=[0, 100],
                                        title="Edades padres recien nacidos México 2022"))
+    fig.show()
+    fig.write_image("output/heatmap_edades_padres.svg")
+
+
+def save_heatmap_edades_logaritmico(data):
+    proc.check_output_folder("output")
+    z = np.histogram2d(data["edad_padn"], data["edad_madn"], bins=[75, 50],
+                       range=[[0, 75], [0, 50]])
+    data = np.delete(z[0], range(9), 0)
+    data = np.delete(data, range(9), 1)
+    data = pd.DataFrame(data, columns=range(10, 51), index=range(10, 76))
+    fig = go.Figure(go.Heatmap(
+        z=data,
+        x=data.columns,
+        y=data.index,
+        colorscale=[
+            [0, 'rgb(0, 0, 80)'],  # 0
+            [1. / 10000, 'rgb(0, 0, 230)'],  # 10
+            [1. / 1000, 'rgb(230, 230, 230)'],  # 100
+            [1. / 100, 'rgb(230, 0, 0)'],  # 1000
+            [1. / 10, 'rgb(80, 0, 0)'],  # 10000
+            [1., 'rgb(0, 0, 0)'],   # 100000
+            ],
+        colorbar=dict(
+            tick0=0,
+            tickmode='array',
+            tickvals=[0, 100, 1000, 10000, 100000]
+        )
+    ))
+
     fig.show()
     fig.write_image("output/heatmap_edades_padres.svg")
 
