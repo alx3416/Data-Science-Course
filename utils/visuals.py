@@ -40,10 +40,25 @@ def save_heatmap_edades(data):
     proc.check_output_folder("output")
     fig = go.Figure(px.density_heatmap(data, x="edad_padn", y="edad_madn",
                                        color_continuous_scale="Rainbow",
-                                       range_color=[0, 5000],
+                                       range_color=[0, 100],
                                        title="Edades padres recien nacidos México 2022"))
     fig.show()
     fig.write_image("output/heatmap_edades_padres.svg")
+
+
+def save_grafica_polar(data):
+    proc.check_output_folder("output")
+    freqs = data["hora_nac"].value_counts()
+    freqs = freqs.sort_index()
+    theta_values = freqs.index
+    theta_values = theta_values.astype(str)
+    trace = go.Scatterpolar(r=freqs.values, theta=theta_values,
+                            fill='toself')
+    polar_data = trace
+    figure = go.Figure(data=polar_data, layout=None)
+    figure.update_polars(radialaxis=dict(visible=False))
+    figure.write_image("output/polar_hora_nacimiento.svg")
+    figure.show()
 
 
 class Visualizer:
