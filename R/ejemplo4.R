@@ -29,7 +29,7 @@ print(res)
 y <- rnorm(100)
 
 # nombre de la imagen
-png(file = "figura5.png")
+png(file = "mi_figura.png")
 hist(y, main = "Distribución Normal", prob=TRUE)
 curve(dnorm(x,mean=mean(y),sd=sd(y)), add=TRUE,col="red")
 abline(v=quantile(y, .25), col='blue', lwd=3)
