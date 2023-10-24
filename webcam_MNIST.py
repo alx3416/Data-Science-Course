@@ -23,7 +23,7 @@ while (True):
 
     frame = cv2.rectangle(frame, (100, 100), (200, 200), (255, 0, 0), 2)
     I1 = img[100:200, 100:200]
-    th, I1 = cv2.threshold(I1, 128, 192, cv2.THRESH_OTSU)
+    th, I1 = cv2.threshold(I1, 32, 220, cv2.THRESH_OTSU)
     I = cv2.resize(I1, (28, 28), interpolation=cv2.INTER_AREA)
     I = np.float32(I) / 255
     I = np.abs(1 - I)
