@@ -37,6 +37,16 @@ def normalize_diabetes_data(data):
     return normalized_data
 
 
+def normalize_gen_data(data):
+    mu_data = data.mean()
+    std_data = data.std()
+    normalized_data = data.sub(mu_data, axis='columns')
+    normalized_data = normalized_data.div(std_data, axis='columns')
+    val = (1 / mt.sqrt(6))
+    normalized_data = normalized_data.mul(val, axis='columns')
+    return normalized_data
+
+
 def use_only_one_feature(data):
     diabetes_one = data[:, np.newaxis, 2]
     return diabetes_one
